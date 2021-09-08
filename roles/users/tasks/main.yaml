@@ -1,0 +1,15 @@
+- name: Adding juri to linux
+  ansible.builtin.user:
+    name: juri
+
+- ansible.posix.authorized_key:
+    user: juri
+    key: https://github.com/hudolejev.keys
+
+- name: Adding roman to linux
+  ansible.builtin.user:
+    name: roman
+
+- ansible.posix.authorized_key:
+    user: roman
+    key: https://github.com/romankuchin.keys
