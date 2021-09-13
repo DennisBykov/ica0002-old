@@ -1,4 +1,4 @@
-DennisBykov-1 ansible_host=193.40.156.86 ansible_port=9522 ansible_ssh_user=ubuntu
+DennisBykov-1 ansible_host=193.40.156.86 ansible_port=4122 ansible_ssh_user=ubuntu
 
 [web_servers]
 DennisBykov-1
