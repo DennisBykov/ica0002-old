@@ -1,0 +1,11 @@
+- name: install uwsgi
+  apt:
+    name:
+      - uwsgi
+      - uwsgi-plugin-python3
+      
+- name: add uWSGI config for AGAMA
+  ansible.builtin.copy:
+    dest: /etc/uwsgi/apps-enabled/agama.ini
+    src: agama.ini
+    mode: 0644

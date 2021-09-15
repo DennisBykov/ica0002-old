@@ -8,3 +8,10 @@
   ansible.builtin.copy:
     src: index.html
     dest: /var/www/html
+
+- name: Nginx service
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: yes
+
