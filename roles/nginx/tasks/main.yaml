@@ -8,6 +8,7 @@
   ansible.builtin.copy:
     src: roles/nginx/files/default
     dest: /etc/nginx/sites-enabled/default
+    validate: nginx -t -c %s
   notify: Restart nginx
 
 - name: Nginx service
