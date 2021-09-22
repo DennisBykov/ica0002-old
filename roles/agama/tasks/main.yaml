@@ -12,12 +12,10 @@
 - name: install dependency
   apt:
     name: python3-flask-sqlalchemy 
+    update_cache: yes
 
 - name: install agama
   get_url:
     url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
     dest: /opt/agama/agama.py
     mode: 0644
-
-    
-

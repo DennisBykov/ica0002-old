@@ -4,14 +4,16 @@
     state: latest
     update_cache: yes
 
-- name: replacing html
+- name: replace the with my copy
   ansible.builtin.copy:
-    src: index.html
-    dest: /var/www/html
+    src: roles/nginx/files/default
+    dest: /etc/nginx/sites-enabled/default
+  notify: Restart nginx
 
 - name: Nginx service
   ansible.builtin.service:
     name: nginx
     state: started
     enabled: yes
+
 
