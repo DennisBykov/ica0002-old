@@ -1,0 +1,16 @@
+- name: install mysql
+  apt:
+    name: mysql-server
+    state: present
+
+- name: ensure service is started
+  service:
+    name: mysql 
+    state: started
+    enabled: yes
+
+- name: Mysql config
+  ansible.builtin.copy:
+    src: override.cnf
+    dest: /etc/mysql/mysql.conf.d/override.cnf
+  notify: Restart mysql

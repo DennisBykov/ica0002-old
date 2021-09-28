@@ -12,7 +12,6 @@
 - name: install dependency
   apt:
     name: python3-flask-sqlalchemy 
-    update_cache: yes
 
 - name: install agama
   get_url:
