@@ -14,3 +14,21 @@
     src: override.cnf
     dest: /etc/mysql/mysql.conf.d/override.cnf
   notify: Restart mysql
+
+- name: install python3-pymysql
+  ansible.builtin.apt:
+    name: python3-pymysql
+    state: latest
+
+- name: Create a new mysql database
+  community.mysql.mysql_db:
+    name: "{{ mysql_database }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: add mysql user
+  community.mysql.mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    host: "%"
+    priv: "{{ mysql_database }}.*:ALL"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
