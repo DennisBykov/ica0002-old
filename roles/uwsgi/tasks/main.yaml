@@ -3,6 +3,7 @@
     name:
       - uwsgi
       - uwsgi-plugin-python3
+    state: present
 
 - name: add uWSGI config for AGAMA
   ansible.builtin.template:
@@ -17,3 +18,8 @@
     state: started
     enabled: yes
  
+
+
+
+
+

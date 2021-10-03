@@ -11,8 +11,10 @@
 
 - name: install dependency
   apt:
-    name: python3-flask-sqlalchemy 
-    name: python3-pymysql
+    name: 
+      - python3-flask-sqlalchemy
+      - python3-pymysql
+    state: present
 
 - name: install agama
   get_url:
