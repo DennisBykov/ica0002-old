@@ -1,0 +1,10 @@
+- name: Istall bind
+  apt:
+    name: bind9
+    update_cache: yes
+
+- name: Bind started
+  ansible.builtin.service:
+    name: bind9
+    state: started
+    enabled: yes

@@ -1,0 +1,6 @@
+---
+  - name: DNS server
+    hosts: DennisBykov-2
+    become: yes
+    roles:
+      - bind
