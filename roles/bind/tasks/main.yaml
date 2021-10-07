@@ -8,3 +8,20 @@
     name: bind9
     state: started
     enabled: yes
+
+- name: changing template
+  ansible.builtin.template:
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
+  notify: Restart bind
+
+- name: change template x2
+  template:
+    src: db.xoxoli.j2
+    dest: /var/cache/bind/db.xoxoli.j2
+
+- name: change template x3
+  template:
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+  notify: Restart bind
