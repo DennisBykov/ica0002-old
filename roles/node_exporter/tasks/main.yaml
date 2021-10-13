@@ -1,0 +1,11 @@
+- name: install prometheus node exporters
+  apt:
+    name: prometheus-node-exporter
+    state: latest
+  
+- name: prom_node_exp is started
+  ansible.builtin.service:
+    name: prometheus-node-exporter
+    state: started
+    enabled: yes
+

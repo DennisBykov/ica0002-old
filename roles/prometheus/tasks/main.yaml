@@ -1,0 +1,10 @@
+- name: install prometheus on vm2
+  apt:
+    name: prometheus
+    state: latest
+
+- name: prometheus is running
+  service:
+    name: prometheus
+    state: started
+    enabled: yes
