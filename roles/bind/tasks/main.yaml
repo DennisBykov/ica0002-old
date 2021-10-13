@@ -19,7 +19,7 @@
 - name: change template x2
   template:
     src: db.xoxoli.j2
-    dest: /var/cache/bind/db.xoxoli.j2
+    dest: /var/lib/bind/db.xoxoli
 
 - name: change template x3
   template:
