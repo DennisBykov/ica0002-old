@@ -26,5 +26,5 @@
     src: named.conf.local.j2
     dest: /etc/bind/named.conf.local
   notify: Restart bind
-  
-  #rndc reload on the machine
+
+ #rndc reload on the machine
