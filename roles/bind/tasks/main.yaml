@@ -19,10 +19,12 @@
 - name: change template x2
   template:
     src: db.xoxoli.j2
-    dest: /var/lib/bind/db.xoxoli
+    dest: /var/lib/bind/db.xoxoli.j2
 
 - name: change template x3
   template:
     src: named.conf.local.j2
     dest: /etc/bind/named.conf.local
   notify: Restart bind
+  
+  #rndc reload on the machine
