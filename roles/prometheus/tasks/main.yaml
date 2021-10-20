@@ -8,3 +8,9 @@
     name: prometheus
     state: started
     enabled: yes
+
+- name: change prom yml
+  template:
+    src: prometheus.yml
+    dest: /etc/prometheus/prometheus.yml
+  notify: Restart prometheus

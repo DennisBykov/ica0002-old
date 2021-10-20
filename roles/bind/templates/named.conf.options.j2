@@ -4,7 +4,7 @@ acl lan {
     {% endfor -%}
 };
 options {
-	directory "/var/cache/bind";
+	directory "/var/lib/bind";
 
 	forwarders {
 	 	{% for n in DNS_forwarders %}
