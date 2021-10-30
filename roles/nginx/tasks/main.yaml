@@ -4,8 +4,8 @@
     state: latest
 
 - name: replace the with my copy
-  ansible.builtin.copy:
-    src: roles/nginx/files/default
+  ansible.builtin.template:
+    src: default
     dest: /etc/nginx/sites-enabled/default
   notify: Restart nginx
 
