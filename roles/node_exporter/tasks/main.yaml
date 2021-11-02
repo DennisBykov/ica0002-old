@@ -9,3 +9,7 @@
     state: started
     enabled: yes
 
+#- name: 10 sec pause
+#  pause:
+#    seconds: 10
+#  when: node_exporter_installed.changed

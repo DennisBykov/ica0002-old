@@ -9,6 +9,12 @@
     state: started
     enabled: yes
 
+- name: change /etc/default/prometheus
+  template:
+    src: prometheus
+    dest: /etc/default/prometheus-node-exporter
+  notify: Restart prometheus
+
 - name: change prom yml
   template:
     src: prometheus.yml
