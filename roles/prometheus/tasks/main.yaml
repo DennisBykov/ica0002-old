@@ -12,7 +12,7 @@
 - name: change /etc/default/prometheus
   template:
     src: prometheus
-    dest: /etc/default/prometheus-node-exporter
+    dest: /etc/default/prometheus
   notify: Restart prometheus
 
 - name: change prom yml

@@ -5,8 +5,7 @@
     roles:
       - init
     hosts:
-      - web_servers
-      - db_servers
+      - all
 
   - name: Database server
     become: yes
