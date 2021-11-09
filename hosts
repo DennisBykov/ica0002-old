@@ -1,10 +1,10 @@
-DennisBykov-1 ansible_host=193.40.156.86 ansible_port=17222 ansible_ssh_user=ubuntu
-DennisBykov-2 ansible_host=193.40.156.86 ansible_port=12122 ansible_ssh_user=ubuntu
+DennisBykov-1 ansible_host=193.40.156.86 ansible_port=2722 ansible_ssh_user=ubuntu
+DennisBykov-2 ansible_host=193.40.156.86 ansible_port=14622 ansible_ssh_user=ubuntu
 
 [db_servers]
 DennisBykov-2
 
-[web_servers]
+[app_servers]
 DennisBykov-1
 
 [dns_servers]
