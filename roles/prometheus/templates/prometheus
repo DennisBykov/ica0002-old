@@ -2,7 +2,7 @@
 # Due to shell scaping, to pass backslashes for regexes, you need to double
 # them (\\d for \d). If running under systemd, you need to double them again
 # (\\\\d to mean \d), and escape newlines too.
-ARGS="--web.external-url http://{{ ansible_host }}:{{ ansible_port - 22 + 80 }}/prometheus/"
+ARGS="--web.external-url=http://{{ ansible_host }}:{{ ansible_port // 100}}80/prometheus"
 #
 # Prometheus-node-exporter supports the following options:
 #

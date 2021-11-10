@@ -24,6 +24,7 @@
     become: yes
     roles:
       - mysql
+      - mysql_exporter
     hosts:
       - db_servers
 
