@@ -1,0 +1,11 @@
+- name: prom nginx exporter
+  apt:
+    name: prometheus-nginx-exporter
+
+- name: start nginx exporter on boot
+  service:
+    name: prometheus-nginx-exporter
+    state: started
+    enabled: yes
+
+

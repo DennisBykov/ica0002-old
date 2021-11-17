@@ -12,6 +12,7 @@
     become: yes
     roles:
       - bind
+      - bind_exporter
 
   - name: configure resolver
     hosts: all
@@ -46,3 +47,4 @@
     become: yes
     roles:
       - nginx
+      - nginx_exporter

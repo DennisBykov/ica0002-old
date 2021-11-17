@@ -1,0 +1,9 @@
+- name: prom bind exporter
+  apt:
+    name: prometheus-bind-exporter
+
+- name: start prometheus bind exporters on boot
+  service:
+    name: prometheus-bind-exporter
+    state: started
+    enabled: yes
