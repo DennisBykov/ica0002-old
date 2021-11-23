@@ -1,0 +1,24 @@
+- name: adding an apt key
+  ansible.builtin.apt_key:
+    url: https://packages.grafana.com/gpg.key
+
+- name: add a repository into source list
+  ansible.builtin.apt_repository:
+    repo: deb https://packages.grafana.com/oss/deb stable main
+
+- name: install grafana
+  ansible.builtin.apt:
+    name: grafana
+# notify: change admin pass
+
+- name: start grafana on boot
+  ansible.builtin.service:
+    name: grafana-server
+    state: started
+    enabled: yes
+
+- name: changing template to grafana.ini.j2
+  template:
+    src: grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
+  notify: Restart grafana
