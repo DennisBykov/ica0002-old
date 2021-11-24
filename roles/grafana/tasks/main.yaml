@@ -9,7 +9,10 @@
 - name: install grafana
   ansible.builtin.apt:
     name: grafana
-# notify: change admin pass
+
+- name: reset admin pass
+  ansible.builtin.command:
+    cmd: grafana-cli admin reset-admin-password '{{grafana_pass}}'
 
 - name: start grafana on boot
   ansible.builtin.service:
@@ -17,8 +20,31 @@
     state: started
     enabled: yes
 
+- name: create a dictionary
+  ansible.builtin.file:
+    path: /var/lib/grafana/dashboards
+    state: directory
+
+- name: copy main dashboard
+  copy:
+    src: main.json
+    dest: /var/lib/grafana/dashboards/main.json
+
+- name: copy grafana datasource
+  template:
+    src: sample.yaml
+    dest: /etc/grafana/provisioning/datasources/sample.yaml
+  notify: Restart grafana
+
+- name: copy grafana dashboard
+  template:
+    src: main.yaml
+    dest: /etc/grafana/provisioning/dashboards/main.yaml
+  notify: Restart grafana
+
 - name: changing template to grafana.ini.j2
   template:
     src: grafana.ini.j2
     dest: /etc/grafana/grafana.ini
   notify: Restart grafana
+
