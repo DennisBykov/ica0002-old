@@ -1,0 +1,35 @@
+- name: install fping
+  apt:
+    name: fping
+    state: latest
+
+- name: install curl
+  apt:
+    name: curl
+    state: latest
+
+- name: pinger.sh
+  template: 
+    src: pinger.sh
+    dest: /usr/local/bin/pinger
+    mode: '0555'
+  notify: Restart pinger
+
+- name: create a directory
+  file:
+    path: /etc/pinger/
+    state: directory
+
+- name: pinger.conf
+  template:
+    src: pinger.conf
+    dest: /etc/pinger/pinger.conf
+  notify: Restart pinger
+
+- name: Service pinger
+  template:
+    src: pinger.service
+    dest: /etc/systemd/system/pinger.service
+  notify:
+    - Daemon_reload
+    - Restart pinger

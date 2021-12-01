@@ -11,5 +11,5 @@ datasources:
     database:
     isDefault: true
     version: 1
-    editable: false
+    editable: true
 
