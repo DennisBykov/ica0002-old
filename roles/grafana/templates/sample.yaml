@@ -13,3 +13,20 @@ datasources:
     version: 1
     editable: true
 
+  - name: InfluxDB
+    type: influxdb
+    access: proxy
+    orgId: 1
+    url: http://DennisBykov-1:8086
+    database: latency
+    version: 1
+    editable: false
+
+  - name: InfluxDB-telegraf
+    type: influxdb
+    access: proxy
+    orgId: 1
+    url: http://DennisBykov-1:8086
+    database: telegraf
+    version: 1
+    editable: false

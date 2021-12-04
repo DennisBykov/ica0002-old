@@ -10,10 +10,6 @@
   ansible.builtin.apt:
     name: grafana
 
-#- name: reset admin pass
-#  ansible.builtin.command:
-#    cmd: grafana-cli admin reset-admin-password '{{grafana_pass}}'
-
 - name: start grafana on boot
   ansible.builtin.service:
     name: grafana-server

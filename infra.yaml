@@ -3,6 +3,7 @@
     become: yes
     roles:
       - init
+      - rsyslog
       - node_exporter
     hosts:
       - all
@@ -29,6 +30,13 @@
     hosts:
       - db_servers
 
+  - name: Web server
+    hosts: all
+    become: yes
+    roles:
+      - nginx
+      - nginx_exporter
+
   - name: App server
     hosts: app_servers
     become: yes
@@ -50,16 +58,10 @@
     roles:
       - prometheus
 
-  - name: Web server
-    hosts: all
-    become: yes
-    roles:
-      - nginx
-      - nginx_exporter
-
   - name: Grafana
     hosts: grafana
     become: yes
     gather_facts: no
     roles:
       - grafana
+    tags: grafana
