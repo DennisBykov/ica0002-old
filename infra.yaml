@@ -51,6 +51,7 @@
     roles:
       - influxdb
       - pinger
+      - influxdb_exporter
 
   - name: Install prometheus 
     hosts: prometheus
