@@ -20,6 +20,7 @@
   template:
     src: db.xoxoli.j2
     dest: /var/lib/bind/db.xoxoli.j2
+  notify: Restart bind
 
 - name: change template x3
   template:

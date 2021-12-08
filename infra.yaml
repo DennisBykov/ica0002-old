@@ -5,6 +5,7 @@
       - init
       - rsyslog
       - node_exporter
+      - backup
     hosts:
       - all
 
@@ -14,6 +15,7 @@
     roles:
       - bind
       - bind_exporter
+    tags: bind
 
   - name: configure resolver
     hosts: all
