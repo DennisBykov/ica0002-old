@@ -179,11 +179,27 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
           "exemplar": true,
-          "expr": "rate(node_cpu_seconds_total[1m])",
+          "expr": "100 - (avg(irate(node_cpu_seconds_total{mode=\"idle\",instance=\"DennisBykov-1:9100\"}[1m])) * 100)",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
+          "exemplar": true,
+          "expr": "100 - (avg(irate(node_cpu_seconds_total{mode=\"idle\",instance=\"DennisBykov-2:9100\"}[1m])) * 100)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
         }
       ],
       "title": "CPU load",
@@ -332,7 +348,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "datasource": {
@@ -531,7 +547,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "exemplar": true,
@@ -771,7 +787,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "exemplar": true,
