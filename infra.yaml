@@ -29,8 +29,10 @@
     roles:
       - mysql
       - mysql_exporter
+      - mysql_backup
     hosts:
       - db_servers
+    tags: database
 
   - name: Web server
     hosts: all
@@ -38,7 +40,7 @@
     roles:
       - nginx
       - nginx_exporter
-
+   
   - name: App server
     hosts: app_servers
     become: yes
@@ -54,6 +56,7 @@
       - influxdb
       - pinger
       - influxdb_exporter
+      - influxdb_backup
 
   - name: Install prometheus 
     hosts: prometheus
