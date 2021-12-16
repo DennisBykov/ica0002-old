@@ -5,3 +5,8 @@
     mode: "0700"
     owner: backup
     group: backup
+
+- name: create a file influxdb-backup
+  template:
+    src: influxdb-backup
+    dest: /etc/cron.d/influxdb-backup

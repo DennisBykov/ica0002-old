@@ -3,18 +3,23 @@
     name: nginx
     state: latest
 
-- name: replace the with my copy
-  ansible.builtin.template:
-    src: default
-    dest: /etc/nginx/sites-enabled/default
-  notify: Restart nginx
-
 - name: Nginx service
   ansible.builtin.service:
     name: nginx
     state: started
     enabled: yes
 
+- name: replace default the with my copy
+  ansible.builtin.template:
+    src: default
+    dest: /etc/nginx/sites-enabled/default
+  notify: Restart nginx
+
+- name: exporter
+  template:
+    src: exporter
+    dest: /etc/nginx/sites-enabled/exporter
+  notify: Restart nginx
 
 
 

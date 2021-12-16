@@ -11,7 +11,7 @@
   file:
     path: /home/backup/restore
     state: directory
-    mode: 0744
+    mode: '744'
     owner: backup
     group: backup
 
@@ -23,4 +23,4 @@
   ansible.builtin.template:
     src: known_hosts
     dest: /home/backup/.ssh/known_hosts
-    mode: 0644
+    mode: '644'

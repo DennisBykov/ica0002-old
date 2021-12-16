@@ -1,6 +1,7 @@
 server {
     listen 80 default_server;
     server_name _;
+
 {% if inventory_hostname in groups['app_servers'] %}
     location / {
         uwsgi_pass localhost:5000;
@@ -44,11 +45,3 @@ server {
 {% endif %}
 }
 
-server {
-  listen 127.0.0.1:8080 default_server;
-  server_name _;
-
-  location = /stub_status {
-    stub_status;
-  }
-}

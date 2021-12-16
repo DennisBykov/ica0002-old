@@ -34,20 +34,33 @@
       - db_servers
     tags: database
 
+  - name: App server
+    hosts: app_servers
+    become: yes
+    gather_facts: yes
+    roles:
+      - agama
+      - uwsgi
+
+  - name: Install prometheus
+    hosts: prometheus
+    become: yes
+    roles:
+      - prometheus
+
   - name: Web server
     hosts: all
     become: yes
     roles:
       - nginx
-      - nginx_exporter
-   
-  - name: App server
-    hosts: app_servers
+
+  - name: nginx exporter
+    hosts: all
     become: yes
     roles:
-      - agama
-      - uwsgi
-  
+      - nginx_exporter
+    tags: nginx_exporter
+   
   - name: influxdb
     hosts: influxdb
     become: yes
@@ -57,12 +70,6 @@
       - pinger
       - influxdb_exporter
       - influxdb_backup
-
-  - name: Install prometheus 
-    hosts: prometheus
-    become: yes
-    roles:
-      - prometheus
 
   - name: Grafana
     hosts: grafana
