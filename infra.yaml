@@ -26,6 +26,7 @@
 
   - name: Database server
     become: yes
+    gather_facts: no
     roles:
       - mysql
       - mysql_exporter

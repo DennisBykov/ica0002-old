@@ -40,3 +40,13 @@
     priv:
       '*.*': 'PROCESS,REPLICATION CLIENT,SELECT'
     login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: MySQL replication user
+  community.mysql.mysql_user:
+    name: "{{ replication_user }}"
+    password: "{{ grafana_pass }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    host: "%"
+    priv: "*.*:REPLICATION SLAVE"
+  no_log: true
+
