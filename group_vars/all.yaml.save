@@ -1,4 +1,4 @@
-mysql_host: DennisBykov-1
+mysql_host: DennisBykov-2
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -37,24 +37,4 @@ grafana_pass: !vault |
           3430363238366235310a636563373337626462353734666561346437386534646261666538643435
           3534
 
-backup_user: backup
-backup_password: !vault |
-          $ANSIBLE_VAULT;1.1;AES256
-          64333139373138376164303135373962336661656238383666616563396532306135356664353262
-          3638376337633963376638333833306238363033353833640a616161633230376239323961353766
-          63313339613939353063363031626665363631633966383838356538626365656130336636633935
-          3430363238366235310a636563373337626462353734666561346437386534646261666538643435
-          3534
-
-
-backup_server_ip: 192.168.42.156
-
-backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBSne71MCp6CQCHURWe3CLud6vPDkLfL83Oab/giAI7O
-
-github_username: DennisBykov
-
-replication_user: replication
-
-#replication user pass is grafana pass
-
-node_id: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'].split('.')[-1] }}"
+backup_server_ip: 192.168.42.15#

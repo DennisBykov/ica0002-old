@@ -1,6 +1,7 @@
 - name: prometheus mysql exporter
   apt:
     name: prometheus-mysqld-exporter
+    state: present
   register: prom_exporter_installed
 
 - name: change my.cnf.j2

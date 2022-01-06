@@ -10,8 +10,8 @@
     enabled: yes
 
 - name: Mysql config
-  ansible.builtin.copy:
-    src: override.cnf
+  ansible.builtin.template:
+    src: override.cnf.j2
     dest: /etc/mysql/mysql.conf.d/override.cnf
   notify: Restart mysql
 
@@ -49,4 +49,46 @@
     host: "%"
     priv: "*.*:REPLICATION SLAVE"
   no_log: true
+
+- name: READONLY mode ON
+  community.mysql.mysql_variables:
+    variable: read_only
+    value: 'ON'
+    mode: persist
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  when: inventory_hostname != mysql_host
+  notify:
+    - MySQL replica
+    - MySQL source
+  tags: so
+
+- name: READONLY mode OFF
+  community.mysql.mysql_variables:
+    variable: read_only
+    value: 'OFF'
+    mode: persist
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  when: inventory_hostname == mysql_host
+  notify:
+    - MySQL replica
+    - MySQL source
+  tags: so
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

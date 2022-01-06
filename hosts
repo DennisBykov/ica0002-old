@@ -21,4 +21,4 @@ DennisBykov-2
 DennisBykov-1
 
 [all:vars]
-ansible_host=193.40.156.86
+ansible_host=193.40.156.67

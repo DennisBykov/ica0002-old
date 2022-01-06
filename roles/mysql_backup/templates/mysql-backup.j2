@@ -1,4 +1,6 @@
-0 10,22 * * *  backup  mysqldump agama > /home/backup/mysql/agama.sql
-10 22 * * 0  backup  duplicity --no-encryption full /home/backup/mysql/ rsync://DennisBykov@backup.xoxoli.us//home/DennisBykov/mysql/
-10 22 * * 1-6  backup  duplicity --no-encryption incremental /home/backup/mysql/ rsync://DennisBykov@backup.xoxoli.us//home/DennisBykov/mysql/
-
+{% if inventory_hostname != mysql_host -%}
+0 10,22 * * *  backup  rm -rf /home/backup/mysql/*; mysqldump agama > /home/backup/mysql/agama.sql
+5 10,22 * * *  root  chown backup /home/backup/mysql/agama.sql
+10 22 * * 0  backup  duplicity --no-encryption full /home/backup/mysql rsync://DennisBykov@backup.xoxoli.us//home/DennisBykov/mysql
+10 22 * * 1-6  backup  duplicity --no-encryption incremental /home/backup/mysql rsync://DennisBykov@backup.xoxoli.us//home/DennisBykov/mysql
+{% endif -%}
