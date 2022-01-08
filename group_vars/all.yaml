@@ -58,3 +58,7 @@ replication_user: replication
 #replication user pass is grafana pass
 
 node_id: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'].split('.')[-1] }}"
+
+docker_user: DennisBykov
+
+grafana_port: 3001
