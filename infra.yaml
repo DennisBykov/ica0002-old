@@ -40,15 +40,17 @@
     become: yes
     gather_facts: yes
     roles:
+      - docker
       - agama
-      - uwsgi
+#      - uwsgi
 
   - name: Install prometheus
     hosts: prometheus
     become: yes
     roles:
       - prometheus
-
+    tags: prom
+    
   - name: Web server
     hosts: all
     become: yes
@@ -79,4 +81,7 @@
     roles:
       - docker
       - grafana
-    tags: grafana
+    tags: gd
+
+
+     

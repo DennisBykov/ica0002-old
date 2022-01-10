@@ -1,23 +1,59 @@
-- name: creating agama user
-  ansible.builtin.user:
-    name: agama
+- name: iptable fix
+  ansible.builtin.template:
+    src: iptables.mangle.j2
+    dest: /var/local/iptables.mangle
 
-- name: create a file
-  ansible.builtin.file:
-    path: /opt/agama
-    owner: agama
-    state: directory
-    mode: 0755
+- name: iptable fix
+  community.general.iptables_state:
+    path: /var/local/iptables.mangle
+    state: restored
+    table: mangle
+  poll: 0
+  async: 10
+    
+- name: iptables-persistent
+  ansible.builtin.apt:
+    name: iptables-persistent
+    state: present
 
-- name: install dependency
-  apt:
-    name: 
+- name: iptables over reboot
+  ansible.builtin.template:
+    src: rules.v4
+    dest: /etc/iptables/rules.v4
+- name: agama Dependencies check and instalation
+  ansible.builtin.apt:
+    name:
       - python3-flask-sqlalchemy
       - python3-pymysql
     state: present
 
-- name: install agama
-  get_url:
-    url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
-    dest: /opt/agama/agama.py
-    mode: 0644
+- name: Agama directory
+  ansible.builtin.file:
+    path: /opt/agama
+    state: directory
+
+- name: Download agama application
+  ansible.builtin.get_url:
+    dest: /opt/agama/Dockerfile
+    url: https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile
+    mode: "755"
+
+- name: Create agama image
+  community.docker.docker_image:
+    name: agama
+    source: build
+    build:
+      path: /opt/agama
+
+- name: Install agama docker container
+  community.docker.docker_container:
+    container_default_behavior: no_defaults
+    name: agama-{{item}}
+    image: agama
+    published_ports: "{{ agama_port + item | int }}:8000"
+    restart_policy: always
+    env:
+        AGAMA_DATABASE_URI: mysql+pymysql://{{mysql_user}}:{{mysql_password}}@{{mysql_host}}/{{mysql_database}}
+  loop:
+    - 1
+#    - 2

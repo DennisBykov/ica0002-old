@@ -1,0 +1,46 @@
+- name: iptable fix
+  ansible.builtin.template:
+    src: iptables.mangle.j2
+    dest: /var/local/iptables.mangle
+
+- name: iptable fix
+  community.general.iptables_state:
+    path: /var/local/iptables.mangle
+    state: restored
+    table: mangle
+  poll: 0
+  async: 10
+    
+- name: iptables-persistent
+  ansible.builtin.apt:
+    name: iptables-persistent
+    state: present
+
+- name: iptables over reboot
+  ansible.builtin.template:
+    src: rules.v4
+    dest: /etc/iptables/rules.v4
+
+- name: creating agama user
+  ansible.builtin.user:
+    name: agama
+
+- name: create a file
+  ansible.builtin.file:
+    path: /opt/agama
+    owner: agama
+    state: directory
+    mode: 0755
+
+- name: install dependency
+  apt:
+    name: 
+      - python3-flask-sqlalchemy
+      - python3-pymysql
+    state: present
+
+- name: install agama
+  get_url:
+    url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+    dest: /opt/agama/agama.py
+    mode: 0644

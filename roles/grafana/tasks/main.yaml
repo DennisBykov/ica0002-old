@@ -1,3 +1,36 @@
+- name: grafana directory
+  ansible.builtin.file:
+    path: /opt/grafana/provisioning/{{ item }}
+    state: directory
+    recurse: yes
+  loop:
+    - dashboards/main
+    - datasources
+
+- name: add grafana.ini
+  ansible.builtin.template:
+    src: grafana.ini.j2
+    dest: /opt/grafana/grafana.ini
+
+- name: add dashboards
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /opt/grafana/provisioning/dashboards/{{ item }}
+  loop:
+    - main.json
+    - mysql.json
+    - syslog.json
+
+- name: adding dashboards.yaml
+  ansible.builtin.template:
+    src: dashboards.yaml.j2
+    dest: /opt/grafana/provisioning/dashboards/default.yaml
+
+- name: adding datasourcesyaml
+  ansible.builtin.template: 
+    src: datasources.yaml.j2
+    dest: /opt/grafana/provisioning/datasources/default.yaml
+
 - name: Grafana Docker container
   community.docker.docker_container:
     name: grafana
@@ -6,3 +39,4 @@
     restart_policy: always
     published_ports: "{{ grafana_port }}:3000"
     container_default_behavior: no_defaults
+   
