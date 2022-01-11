@@ -1,25 +1,31 @@
-- name: iptable fix
-  ansible.builtin.template:
+- name: iptables-persistent 
+  apt:
+    name: iptables-persistent 
+
+- name: Download agama application
+  ansible.builtin.get_url:
+    dest: /opt/agama/Dockerfile
+    url: https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile
+    mode: "755"
+  register: agama_installed
+
+- name: iptables-save -t mangle
+  shell: iptables-save -t mangle
+  when: agama_installed.changed
+
+- name: /var/local/iptables.mangle
+  template:
     src: iptables.mangle.j2
     dest: /var/local/iptables.mangle
+  when: agama_installed.changed
 
-- name: iptable fix
+- name: Perform iptables-restore
   community.general.iptables_state:
     path: /var/local/iptables.mangle
     state: restored
     table: mangle
-  poll: 0
-  async: 10
-    
-- name: iptables-persistent
-  ansible.builtin.apt:
-    name: iptables-persistent
-    state: present
+  when: agama_installed.changed
 
-- name: iptables over reboot
-  ansible.builtin.template:
-    src: rules.v4
-    dest: /etc/iptables/rules.v4
 - name: agama Dependencies check and instalation
   ansible.builtin.apt:
     name:
@@ -31,12 +37,6 @@
   ansible.builtin.file:
     path: /opt/agama
     state: directory
-
-- name: Download agama application
-  ansible.builtin.get_url:
-    dest: /opt/agama/Dockerfile
-    url: https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile
-    mode: "755"
 
 - name: Create agama image
   community.docker.docker_image:
@@ -56,4 +56,4 @@
         AGAMA_DATABASE_URI: mysql+pymysql://{{mysql_user}}:{{mysql_password}}@{{mysql_host}}/{{mysql_database}}
   loop:
     - 1
-#    - 2
+    - 2

@@ -43,6 +43,7 @@
       - docker
       - agama
 #      - uwsgi
+    tags: agama
 
   - name: Install prometheus
     hosts: prometheus
@@ -83,5 +84,18 @@
       - grafana
     tags: gd
 
+  - name: keepalived
+    hosts: app_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - keepalived
+    tags: ka
 
-     
+  - name: haproxy
+    hosts: app_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - haproxy
+    tags: hap
