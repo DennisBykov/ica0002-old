@@ -1,22 +1,29 @@
-acl lan {
-    {% for n in acl_lan_networks %}
-    {{- n }};
-    {% endfor -%}
-};
+acl networks{
+{% for n in acl_lan_networks %}
+{{- n }};
+{% endfor %}};
+
 options {
-	directory "/var/lib/bind";
+	directory "/var/cache/bind";
 
 	forwarders {
-	 	{% for n in DNS_forwarders %}
-                {{n}};
-                {% endfor %}
-	};
-        allow-query {
-          lan;
-        };
+	  {% for n in DNS_forwarders %}
+        {{- n }};
+        {% endfor %}};
+
 	dnssec-validation no;
+
 };
 
 statistics-channels {
- inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+};
+
+key "dns_transfer_key" {
+    algorithm hmac-sha256;
+	  secret "{{ dns_transfer_key }}";
+};
+key "dns_update_key" {
+    algorithm hmac-sha256;
+	  secret "{{ dns_update_key }}";
 };

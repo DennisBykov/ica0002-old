@@ -2,6 +2,11 @@
   apt:
     name: iptables-persistent 
 
+- name: Agama directory
+  ansible.builtin.file:
+    path: /opt/agama
+    state: directory
+
 - name: Download agama application
   ansible.builtin.get_url:
     dest: /opt/agama/Dockerfile
@@ -32,11 +37,6 @@
       - python3-flask-sqlalchemy
       - python3-pymysql
     state: present
-
-- name: Agama directory
-  ansible.builtin.file:
-    path: /opt/agama
-    state: directory
 
 - name: Create agama image
   community.docker.docker_image:

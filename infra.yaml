@@ -8,21 +8,30 @@
       - backup
     hosts:
       - all
+    tags: init
 
   - name: install DNS
-    hosts: DennisBykov-2
+    hosts: dns_servers
     become: yes
     roles:
       - bind
       - bind_exporter
     tags: bind
 
-  - name: configure resolver
-    hosts: all
+  - name: dns records
+    hosts: dns_master
     become: yes
     gather_facts: no
     roles:
-      - dns_resolved
+      - dns_records
+    tags: records
+
+#  - name: configure resolver
+#    hosts: all
+#    become: yes
+#    gather_facts: no
+#    roles:
+#      - dns_resolved
 
   - name: Database server
     become: yes
