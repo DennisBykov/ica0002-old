@@ -1,5 +1,6 @@
-DennisBykov-1 ansible_host=193.40.156.67 ansible_port=15822 ansible_ssh_user=ubuntu
-DennisBykov-2 ansible_host=193.40.156.67 ansible_port=18322 ansible_ssh_user=ubuntu
+DennisBykov-1 ansible_port=15822 
+DennisBykov-2 ansible_port=18322
+DennisBykov-3 ansible_port=14422
 
 [db_servers]
 DennisBykov-1
@@ -10,24 +11,25 @@ DennisBykov-1
 DennisBykov-2
 
 [dns_master]
-DennisBykov-2
+DennisBykov-3
 
 [dns_slaves]
 DennisBykov-1
+DennisBykov-2
 
 [dns_servers:children]
 dns_master
 dns_slaves
 
 [prometheus]
-DennisBykov-2
+DennisBykov-3
 
 [grafana]
 #and docker
-DennisBykov-2
+DennisBykov-3
 
 [influxdb]
-DennisBykov-1
+DennisBykov-3
 
 [keepalived]
 DennisBykov-1
@@ -40,4 +42,4 @@ DennisBykov-2
 [all:vars]
 ansible_host=193.40.156.67
 ansible_python_interpreter=python3
-ansible_user=ubuntu
+ansible_ssh_user=ubuntu

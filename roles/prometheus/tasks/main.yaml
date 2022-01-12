@@ -1,4 +1,4 @@
-- name: install prometheus on vm2
+- name: install prometheus
   apt:
     name: prometheus
     state: latest

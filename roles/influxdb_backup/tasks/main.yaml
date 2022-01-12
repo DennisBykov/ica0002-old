@@ -8,5 +8,5 @@
 
 - name: create a file influxdb-backup
   template:
-    src: influxdb-backup
+    src: influxdb-backup.j2
     dest: /etc/cron.d/influxdb-backup
