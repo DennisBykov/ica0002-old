@@ -41,4 +41,3 @@
     restart_policy: always
     published_ports: "{{ grafana_port }}:3000"
     container_default_behavior: no_defaults
-   
