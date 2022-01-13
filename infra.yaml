@@ -1,6 +1,7 @@
 ---
   - name: init
     become: yes
+    gather_facts: yes
     roles:
       - init
       - rsyslog
@@ -12,6 +13,7 @@
 
   - name: install DNS
     hosts: dns_servers
+    gather_facts: yes
     become: yes
     roles:
       - bind
@@ -47,7 +49,7 @@
   - name: App server
     hosts: app_servers
     become: yes
-    gather_facts: yes
+    gather_facts: no
     roles:
       - docker
       - agama
@@ -63,13 +65,16 @@
     
   - name: Web server
     hosts: all
+    gather_facts: no
     become: yes
     roles:
       - nginx
+    tags: nginx
 
   - name: nginx exporter
     hosts: all
     become: yes
+    gather_facts: no
     roles:
       - nginx_exporter
     tags: nginx_exporter
@@ -83,6 +88,7 @@
       - pinger
       - influxdb_exporter
       - influxdb_backup
+    tags: influx
 
   - name: Grafana and Docker
     hosts: grafana
@@ -96,7 +102,7 @@
   - name: keepalived
     hosts: app_servers
     become: yes
-    gather_facts: no
+    gather_facts: yes
     roles:
       - keepalived
     tags: ka

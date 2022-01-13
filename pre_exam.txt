@@ -1,0 +1,65 @@
+N 13 jaan  2022 16:27:38 EET
++ hostname
+dennis-Ubuntu
++ ansible-playbook infra.yaml --diff
+
+PLAY [init] ***********************************************************************************************************************************************************************************************
+
+TASK [Gathering Facts] ************************************************************************************************************************************************************************************
+ok: [DennisBykov-2]
+ok: [DennisBykov-3]
+ok: [DennisBykov-1]
+
+TASK [init : Update APT cache] ****************************************************************************************************************************************************************************
+ok: [DennisBykov-2]
+ok: [DennisBykov-3]
+changed: [DennisBykov-1]
+
+TASK [init : Inventory hostname] **************************************************************************************************************************************************************************
+ok: [DennisBykov-3]
+ok: [DennisBykov-2]
+--- before
++++ after
+@@ -1 +1 @@
+-hostname = dennisbykov-1
++hostname = DennisBykov-1
+
+changed: [DennisBykov-1]
+
+TASK [rsyslog : copy telegraf conf] ***********************************************************************************************************************************************************************
+ok: [DennisBykov-3]
+ok: [DennisBykov-2]
+--- before
++++ after: /home/dennis/.ansible/tmp/ansible-local-167885qtb6grvz/tmpixn37ltv/10-telegraf.conf
+@@ -0,0 +1,10 @@
++$ActionQueueType LinkedList # use asynchronous processing
++$ActionQueueFileName srvrfwd # set file name, also enables disk mode
++$ActionResumeRetryCount -1 # infinite retries on insert failure
++$ActionQueueSaveOnShutdown on # save in-memory data if rsyslog shuts down
++
++# forward over tcp with octet framing according to RFC 5425
++#*.* @@(o)127.0.0.1:6514;RSYSLOG_SyslogProtocol23Format
++
++# uncomment to use udp according to RFC 5424
++*.* @DennisBykov-3:6514;RSYSLOG_SyslogProtocol23Format
+
+changed: [DennisBykov-1]
+
+TASK [node_exporter : install prometheus node exporters] **************************************************************************************************************************************************
+ok: [DennisBykov-3]
+ok: [DennisBykov-2]
+The following additional packages will be installed:
+  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
+  moreutils prometheus-node-exporter-collectors smartmontools
+Suggested packages:
+  gsmartcontrol smart-notifier mailx | mailutils
+The following NEW packages will be installed:
+  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
+  moreutils prometheus-node-exporter prometheus-node-exporter-collectors
+  smartmontools
+0 upgraded, 8 newly installed, 0 to remove and 142 not upgraded.
+changed: [DennisBykov-1]
+
+TASK [node_exporter : prom_node_exp is started] ***********************************************************************************************************************************************************
+ok: [DennisBykov-1]
+ [ERROR]: User interrupted execution
