@@ -1,6 +1,6 @@
-DennisBykov-1 ansible_port=15822 
-DennisBykov-2 ansible_port=18322
-DennisBykov-3 ansible_port=14422
+DennisBykov-1 ansible_port=4122 
+DennisBykov-2 ansible_port=15422
+DennisBykov-3 ansible_port=7422
 
 [db_servers]
 DennisBykov-1
