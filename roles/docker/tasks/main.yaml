@@ -1,25 +1,3 @@
-#- name: iptable fix
-#  ansible.builtin.template:
-#    src: iptables.mangle.j2
-#    dest: /var/local/iptables.mangle
-
-#- name: iptable fix
-#  community.general.iptables_state:
-#    path: /var/local/iptables.mangle
-#    state: restored
-#    table: mangle
-#  poll: 0
-#  async: 10
-    
-#- name: iptables-persistent
-#  ansible.builtin.apt:
-#    name: iptables-persistent
-#    state: present
-
-#- name: iptables over reboot
-#  ansible.builtin.template:
-#    src: rules.v4
-#    dest: /etc/iptables/rules.v4
 
 - name: Install docker container
   ansible.builtin.apt:
@@ -28,29 +6,13 @@
       - python3-docker
     state: present
 
+- name: Log into DockerHub
+  community.docker.docker_login:
+    username: "{{docker_user}}"
+    password: "{{grafana_pass}}"
+
 - name: Docker started
   ansible.builtin.service:
     name: docker
     state: started
     enabled: yes
-
-#- name: iptables-persistent 
-#  apt:
-#    name: iptables-persistent 
-
-#- name: iptables-save -t mangle
-#  shell: iptables-save -t mangle
-#  when: docker_install.changed
-
-#- name: /var/local/iptables.mangle
-#  template:
-#    src: iptables.mangle.j2
-#    dest: /var/local/iptables.mangle
-#  when: docker_install.changed
-
-#- name: Perform iptables-restore
-#  community.general.iptables_state:
-#    path: /var/local/iptables.mangle
-#    state: restored
-#    table: mangle
-#  when: docker_install.changed 

@@ -11,7 +11,8 @@
     src: agama.ini
     mode: 0644
   notify: Restart uwsgi
-
+  no_log: true
+  
 - name:  uwsgi started
   ansible.builtin.service:
     name: uwsgi

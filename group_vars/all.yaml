@@ -59,7 +59,7 @@ replication_user: replication
 
 node_id: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'].split('.')[-1] }}"
 
-docker_user: DennisBykov
+docker_user: dennisbykov
 
 grafana_port: 3001
 
