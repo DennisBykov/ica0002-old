@@ -1,35 +1,46 @@
-- name: install fping
-  apt:
+- name: Install fping
+  ansible.builtin.apt:
     name: fping
-    state: latest
+    state: present
 
-- name: install curl
-  apt:
+- name: Install curl
+  ansible.builtin.apt:
     name: curl
-    state: latest
+    state: present
 
-- name: pinger.sh
-  template: 
+- name: User pinger
+  ansible.builtin.user:
+    name: pinger
+
+- name: Add pinger script
+  ansible.builtin.template:
     src: pinger.sh
     dest: /usr/local/bin/pinger
     mode: '0555'
+    owner: pinger
   notify: Restart pinger
 
-- name: create a directory
-  file:
-    path: /etc/pinger/
+- name: Creating pinger service
+  ansible.builtin.template:
+    src: pinger.service
+    dest: /etc/systemd/system/pinger.service
+  notify:
+    - Restart pinger
+    - Daemon_reload
+
+- name: Create directory for pinger config
+  ansible.builtin.file:
+    path: /etc/pinger
     state: directory
 
-- name: pinger.conf
-  template:
+- name: Adding config for pinger
+  ansible.builtin.template:
     src: pinger.conf
     dest: /etc/pinger/pinger.conf
   notify: Restart pinger
 
-- name: Service pinger
-  template:
-    src: pinger.service
-    dest: /etc/systemd/system/pinger.service
-  notify:
-    - Daemon_reload
-    - Restart pinger
+- name: pinger started
+  ansible.builtin.service:
+    name: pinger
+    state: started
+    enabled: yes
