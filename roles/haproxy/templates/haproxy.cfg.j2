@@ -28,8 +28,10 @@ listen ha_agama
     bind *:88
     stats enable
     stats uri /monitor
-    stats refresh 5s
-    server a1 DennisBykov-1:8001 check
-    server a2 DennisBykov-1:8002 check
-    server a3 DennisBykov-2:8001 check
-	server a4 DennisBykov-2:8002 check
+    {% set counter = [] %}
+    {%- for vm in groups['haproxy'] -%}
+    {% for x in range(agama_instances) -%}
+    {{ counter.append(loop.index) | default("", True) -}}
+    server a{{ counter | length}} {{ vm }}:{{ agama_port + loop.index }} check
+    {% endfor %} 
+    {%- endfor %}

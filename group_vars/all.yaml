@@ -67,6 +67,8 @@ grafana_port: 3001
 
 agama_port: 8000
 
+agama_instances: 2
+
 dns_update_key: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           61353038636665303638663265336633386339666566626262386137383030383330313365373038
