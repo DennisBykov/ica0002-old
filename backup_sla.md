@@ -1,41 +1,48 @@
-Backup Service Level Agreement (SLA)
-_______________
+This document describes SLA (Service Level Agreement)
 
-Backup coverage
 
-Manual restoration via ansible playbook backup:
-- App service (Agama) - covered by ansible repo
-- Web service (Nginx) - covered by ansible repo
-- DNS service (Bind9) - covered by ansible repo
-- Database service (InfluxDB, MySQL) - backed up daily
-- Monitoring services (Grafana, Exporters) - covered by ansible repo
-- Ansible repo - backed up daily
+*******************
+1. Backup coverage:
+*1.1 Following services can be manually restored using ansible playbook:
+- Web service (Nginx)
+- App service (AGAMA)
+- Monitoring service (Prometheus, Prometheus exporters, Grafana)
+- DNS service (Bind)
 
-______________________________
-RPO (recovery point objective)
+*1.2 Following services are backed up on daily bases:
+- Database service (MySQL)
+- Metrics/Logs Database service (InfluxDB)
+- Ansible repository
 
-The backup will restore the database to an identical point in no more than one day in the past.
-________________________
-Versioning and retention
 
-Local backup is made once a day at 3:30 in the morning. Includes: InfluxDB, MySQL and ansible repository.
-Local backups are deleted once a day right before new backup is made. Includes: InfluxDB, MySQL and ansible repository.
+*********************************
+2. RPO (Recovery Point Objective)
+*2.1 The backup will allow to restore Databases (paragraph 1.2) to state no more than one day in the past.
 
-Full backup is made every Sunday at 3:30 in the morning. Includes: InfluxDB, MySQL and ansible repository.
-Full backups are kept for one month. Includes: InfluxDB, MySQL and ansible repository.
 
-________________
-Usability checks
+***************************
+3. Versioning and retention
+Following parts are applied to services mentioned in part 1.2
+*3.1 
+    3.1.1 Local backup is created every day at 22:00 UTC and 10:00 UTC. 
+    3.1.2 Local backup is stored for one day until it is replaced with a new one.
 
-Backup recovery can be verified by using administration tools on virtual environment comparing database dump to live database. 
+*3.2
+    3.2.1 Full backups are created every Sunday at 22:10 UTC.
+    3.2.2 Full backups are stored for at least 30 days.
+    3.2.3 Incremental backups are created every day of the week except of Sunday at 22:10 UTC.
 
-____________________
-Restoration criteria
 
-Restoration occurs only at the time when there is an actual problem with the service that could not be reversed. 
-These include: files deleted by an accident, damaged files, data loss, security breach (malware, ransomware).
+*******************
+4. Usability checks
+*4.1 Usability can be checked using administration tool by comparison of database dump and live database.
 
-_____________________________
-RTO (recovery time objective)
 
-Restoring of a backup will take no longer than 3 hours to guarantee minimal process downtimes.
+***********************
+5. Restoration criteria
+*5.1 Restoration happens only, when problems with service can't be reversed. This includes: damaged files, data loss, security breach.
+
+
+********************************
+6. RTO (Recovery Time Objective)
+*6.1 Services functioning will be recovered in no less than 2 hours.
